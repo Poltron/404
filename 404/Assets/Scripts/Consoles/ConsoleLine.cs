@@ -30,9 +30,12 @@ namespace Adventure
 		private Dictionary<string, List<SendCommandDelegate>> allCommand;
 		#endregion
 
+		[Header("Console")]
 		[SerializeField]
 		private GameObject consoleLine;
 		private InputField consoleField;
+		[SerializeField]
+		private List<string> cmdNames;
 
 		[Header("History")]
 		[SerializeField]
@@ -49,12 +52,14 @@ namespace Adventure
 		{
 			allCommand = new Dictionary<string, List<SendCommandDelegate>>();
 			historic = new Queue<SLineHistory>();
+			cmdNames = new List<string>();
 		}
 
 		private void Start()
 		{
 			consoleField = consoleLine.GetComponent<InputField>();
 			consoleLine.SetActive(false);
+			InitCommandList();
 		}
 
 		private void Update()
@@ -70,6 +75,17 @@ namespace Adventure
 		private void OnDestroy()
 		{
 			allCommand.Clear();
+		}
+
+		private void InitCommandList()
+		{
+			var fields = typeof(Constantes.Command).GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+
+			foreach (var f in fields)
+			{
+				string s = (string)f.GetValue(null);
+				cmdNames.Add(s);
+			}
 		}
 
 		private void SendCommande()
@@ -110,7 +126,10 @@ namespace Adventure
 		{
 			string cmd = "";
 			string[] args = GetArguments(consoleText, out cmd);
-			ECommandResult result = InvokeOnSendCommand(cmd, args);
+			ECommandResult result = ECommandResult.Failed;
+
+			if (cmdNames.Contains(cmd))
+				result = InvokeOnSendCommand(cmd, args);
 			Color color = result == ECommandResult.Successed ? sucessCmd : failedCmd;
 
 			historic.Enqueue(new SLineHistory(consoleText, color));
