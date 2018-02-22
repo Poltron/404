@@ -13,6 +13,18 @@ namespace Adventure
 			Successed,
 		}
 
+		private struct SLineHistory
+		{
+			public string line;
+			public Color color;
+
+			public SLineHistory(string text, Color color)
+			{
+				line = text;
+				this.color = color;
+			}
+		}
+
 		#region Event
 		public delegate ECommandResult SendCommandDelegate(string[] args);
 		private Dictionary<string, List<SendCommandDelegate>> allCommand;
@@ -22,9 +34,21 @@ namespace Adventure
 		private GameObject consoleLine;
 		private InputField consoleField;
 
+		[Header("History")]
+		[SerializeField]
+		private Color sucessCmd;
+		[SerializeField]
+		private Color failedCmd;
+		[SerializeField]
+		private int historyNumber;
+		[SerializeField]
+		private Text historiesLine;
+		private Queue<SLineHistory> historic;
+
 		private void Awake()
 		{
 			allCommand = new Dictionary<string, List<SendCommandDelegate>>();
+			historic = new Queue<SLineHistory>();
 		}
 
 		private void Start()
@@ -52,7 +76,6 @@ namespace Adventure
 		{
 			// event inputManager KeyCode.Return
 			consoleLine.SetActive(!consoleLine.activeSelf);
-			consoleField.text = "";
 
 			if (consoleLine.activeSelf)
 			{
@@ -62,6 +85,7 @@ namespace Adventure
 			{
 				SendCommande(consoleField.text);
 			}
+			consoleField.text = "";
 		}
 
 		private string[] GetArguments(string text, out string cmd)
@@ -86,7 +110,26 @@ namespace Adventure
 		{
 			string cmd = "";
 			string[] args = GetArguments(consoleText, out cmd);
-			InvokeOnSendCommand(cmd, args);
+			ECommandResult result = InvokeOnSendCommand(cmd, args);
+			Color color = result == ECommandResult.Successed ? sucessCmd : failedCmd;
+
+			historic.Enqueue(new SLineHistory(consoleText, color));
+			ViewHistory();
+		}
+
+		private void ViewHistory()
+		{
+			if (historic.Count > historyNumber)
+			{
+				historic.Dequeue();
+			}
+
+			historiesLine.text = "";
+			foreach (SLineHistory line in historic)
+			{
+				historiesLine.text += "<color=#" + ColorUtility.ToHtmlStringRGBA(line.color) + ">" + line.line + "</color>\n";
+			}
+			historiesLine.text = historiesLine.text.Remove(historiesLine.text.Length - 1);
 		}
 
 		#region Event
@@ -122,21 +165,20 @@ namespace Adventure
 			allCommand.Clear();
 		}
 
-		private void InvokeOnSendCommand(string cmd, string[] args)
+		private ECommandResult InvokeOnSendCommand(string cmd, string[] args)
 		{
-			ECommandResult result = ECommandResult.Successed;
+			ECommandResult result = ECommandResult.Failed;
 
 			if (string.IsNullOrEmpty(cmd) || !allCommand.ContainsKey(cmd))
 			{
-				result = ECommandResult.Failed;
-				return;
+				return ECommandResult.Failed;
 			}
 
 			foreach (SendCommandDelegate func in allCommand[cmd])
 			{
-				if (func(args) == ECommandResult.Failed)
+				if (func(args) == ECommandResult.Successed)
 				{
-					result = ECommandResult.Failed;
+					result = ECommandResult.Successed;
 				}
 			}
 
@@ -144,6 +186,7 @@ namespace Adventure
 			{
 				// do stuff error
 			}
+			return result;
 		}
 		#endregion
 		#endregion
