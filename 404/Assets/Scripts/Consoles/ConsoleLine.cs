@@ -34,7 +34,6 @@ namespace Adventure
 		[SerializeField]
 		private GameObject consoleLine;
 		private InputField consoleField;
-		[SerializeField]
 		private List<string> cmdNames;
 
 		[Header("History")]
