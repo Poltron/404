@@ -111,6 +111,8 @@ public class PlayerMovement : MonoBehaviour
 
 			myRigidBody.velocity = moveDirection;
 
+            GetComponent<SpriteRenderer>().flipX = false;
+
 			return;
 		}
 		else if (isMovingRight)
@@ -121,7 +123,9 @@ public class PlayerMovement : MonoBehaviour
 
 			myRigidBody.velocity = moveDirection;
 
-			return;
+            GetComponent<SpriteRenderer>().flipX = true;
+
+            return;
 		}
 		else
 		{
@@ -135,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if (IsOnGround())
 			{
-				Debug.Log("Tata");
+				//Debug.Log("Tata");
 				Vector3 moveDirection = myRigidBody.velocity;
 
 				moveDirection.y = JumpForce(jumpHeight, jumpTime);
@@ -146,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public bool IsOnGround()
 	{
-	Debug.Log("Titi");
+	//Debug.Log("Titi");
 		foreach (var trans in feets)
 		{
 			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.2f);
@@ -155,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
 			{
 				if (r.transform.tag == "Platform")
 				{
-					Debug.Log("Toto");
+					//Debug.Log("Toto");
 					return true;
 				}
 			}
