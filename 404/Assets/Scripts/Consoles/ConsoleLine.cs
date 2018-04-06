@@ -30,6 +30,9 @@ namespace Adventure
 		private Dictionary<string, List<SendCommandDelegate>> allCommand;
 		private event SendCommandDelegate OnFailedCommand;
 		private event SendCommandDelegate OnSucessedCommand;
+
+		public delegate void ActiveCommandDelegate(bool isActive);
+		private event ActiveCommandDelegate OnActiveCommande;
 		#endregion
 
 		[Header("Console")]
@@ -104,6 +107,7 @@ namespace Adventure
 				SendCommande(consoleField.text);
 			}
 			consoleField.text = "";
+			InvokeOnActiveCommande(consoleLine.activeSelf);
 		}
 
 		private string[] GetArguments(string text, out string cmd)
@@ -126,6 +130,8 @@ namespace Adventure
 
 		private void SendCommande(string consoleText)
 		{
+			if (consoleText == "")
+				return;
 			string cmd = "";
 			string[] args = GetArguments(consoleText, out cmd);
 			ECommandResult result = ECommandResult.Failed;
@@ -153,12 +159,6 @@ namespace Adventure
 		private void WriteCommande(string cmd)
 		{
 			dico.AutoCompletion(cmd);
-			return;
-			string[] words = cmd.Split(' ');
-
-			if (words.Length == 0)
-				return;
-			dico.AutoCompletion(words[words.Length - 1]);
 		}
 
 		private void ViewHistory()
@@ -270,6 +270,28 @@ namespace Adventure
 		private void InvokeOnFailedCommand(string[] args)
 		{
 			OnFailedCommand?.Invoke(args);
+		}
+		#endregion
+
+		#region OnActiveCommande
+		public void AddOnActiveCommande(ActiveCommandDelegate func)
+		{
+			OnActiveCommande += func;
+		}
+
+		public void RemoveOnActiveCommande(ActiveCommandDelegate func)
+		{
+			OnActiveCommande -= func;
+		}
+
+		private void ResetOnActiveCommande()
+		{
+			OnActiveCommande = null;
+		}
+
+		private void InvokeOnActiveCommande(bool isActive)
+		{
+			OnActiveCommande?.Invoke(isActive);
 		}
 		#endregion
 		#endregion
