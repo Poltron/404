@@ -28,13 +28,18 @@ namespace Adventure
 		#region Event
 		public delegate ECommandResult SendCommandDelegate(string[] args);
 		private Dictionary<string, List<SendCommandDelegate>> allCommand;
+		private event SendCommandDelegate OnFailedCommand;
+		private event SendCommandDelegate OnSucessedCommand;
 		#endregion
 
 		[Header("Console")]
 		[SerializeField]
 		private GameObject consoleLine;
 		private InputField consoleField;
+		[SerializeField]
 		private List<string> cmdNames;
+		[SerializeField]
+		private ConsoleDictionnary dico;
 
 		[Header("History")]
 		[SerializeField]
@@ -57,7 +62,9 @@ namespace Adventure
 		private void Start()
 		{
 			consoleField = consoleLine.GetComponent<InputField>();
+			consoleField.onValueChanged.AddListener(WriteCommande);
 			consoleLine.SetActive(false);
+			historiesLine.text = "";
 			InitCommandList();
 		}
 
@@ -78,13 +85,9 @@ namespace Adventure
 
 		private void InitCommandList()
 		{
-			var fields = typeof(Constantes.Command).GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-
-			foreach (var f in fields)
-			{
-				string s = (string)f.GetValue(null);
-				cmdNames.Add(s);
-			}
+			ConsoleDictionnary dico = GetComponent<ConsoleDictionnary>();
+			cmdNames = new List<string>(dico.GetCommand());
+			return;
 		}
 
 		private void SendCommande()
@@ -131,8 +134,31 @@ namespace Adventure
 				result = InvokeOnSendCommand(cmd, args);
 			Color color = result == ECommandResult.Successed ? sucessCmd : failedCmd;
 
+			string[] type = new string[args.Length + 1];
+			args.CopyTo(type, 1);
+			type[0] = cmd;
+			if (result == ECommandResult.Successed)
+			{
+				InvokeOnSucessedCommand(type);
+			}
+			else
+			{
+				InvokeOnFailedCommand(type);
+			}
+
 			historic.Enqueue(new SLineHistory(consoleText, color));
 			ViewHistory();
+		}
+
+		private void WriteCommande(string cmd)
+		{
+			dico.AutoCompletion(cmd);
+			return;
+			string[] words = cmd.Split(' ');
+
+			if (words.Length == 0)
+				return;
+			dico.AutoCompletion(words[words.Length - 1]);
 		}
 
 		private void ViewHistory()
@@ -199,12 +225,51 @@ namespace Adventure
 					result = ECommandResult.Successed;
 				}
 			}
-
-			if (result == ECommandResult.Failed)
-			{
-				// do stuff error
-			}
 			return result;
+		}
+		#endregion
+
+		#region OnSucessedCommand
+		public void AddOnSucessedCommand(SendCommandDelegate func)
+		{
+			OnSucessedCommand += func;
+		}
+
+		public void RemoveOnSucessedCommand(SendCommandDelegate func)
+		{
+			OnSucessedCommand -= func;
+		}
+
+		private void ResetOnSucessedCommand()
+		{
+			OnSucessedCommand = null;
+		}
+
+		private void InvokeOnSucessedCommand(string[] args)
+		{
+			OnSucessedCommand?.Invoke(args);
+		}
+		#endregion
+
+		#region OnFailedCommand
+		public void AddOnFailedCommand(SendCommandDelegate func)
+		{
+			OnFailedCommand += func;
+		}
+
+		public void RemoveOnFailedCommand(SendCommandDelegate func)
+		{
+			OnFailedCommand -= func;
+		}
+
+		private void ResetOnFailedCommand()
+		{
+			OnFailedCommand = null;
+		}
+
+		private void InvokeOnFailedCommand(string[] args)
+		{
+			OnFailedCommand?.Invoke(args);
 		}
 		#endregion
 		#endregion

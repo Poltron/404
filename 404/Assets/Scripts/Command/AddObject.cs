@@ -28,7 +28,7 @@ namespace Adventure
 
 		void Start()
 		{
-			console = FindObjectOfType<ConsoleLine>();
+			console = GetComponentInParent<ConsoleLine>();
 			console.AddOnSendCommand(Constantes.Command.Add, Do);
 			DivideScreen();
 		}
@@ -82,6 +82,7 @@ namespace Adventure
 			}
 			string objName = args[0];
 			int numColumn = -1;
+
 			if (!int.TryParse(args[1], out numColumn))
 			{
 				return ConsoleLine.ECommandResult.Failed;
@@ -92,7 +93,7 @@ namespace Adventure
 				return ConsoleLine.ECommandResult.Failed;
 			}
 
-			InteractiveBehaviour toSpawn = objectsToInstantiate.Find(obj => obj.Name == args[0]);
+			InteractiveBehaviour toSpawn = objectsToInstantiate.Find(obj => string.Compare(obj.Name, objName, true) == 0);
 			if (toSpawn == null)
 			{
 				return ConsoleLine.ECommandResult.Failed;

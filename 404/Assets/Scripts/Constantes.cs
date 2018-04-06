@@ -8,9 +8,9 @@ namespace Adventure
 	{
 		public static class Command
 		{
-			public const string Add = "Add";
-			public const string Remove = "Remove";
-			public const string Set = "Set";
+			public const string Add = "add";
+			public const string Remove = "remove";
+			public const string Set = "set";
 		}
 	}
 }
