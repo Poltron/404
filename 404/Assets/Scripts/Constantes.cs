@@ -12,5 +12,11 @@ namespace Adventure
 			public const string Remove = "REMOVE";
 			public const string Set = "SET";
 		}
+
+		public static class Tag
+		{
+			public const string ViewerVariable = "ContentViewerVariable";
+			public const string MainCamera = "MainCamera";
+		}
 	}
 }
