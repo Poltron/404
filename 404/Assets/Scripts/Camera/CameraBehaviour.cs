@@ -64,7 +64,7 @@ public class CameraBehaviour : MonoBehaviour
             }
             else
             {
-                float ecart = Camera.main.transform.position.y - Camera.main.orthographicSize + Camera.main.orthographicSize / 3f;
+                float ecart = transform.position.y - Camera.main.orthographicSize + Camera.main.orthographicSize / 3f;
 
                 if (player.GetComponent<Rigidbody2D>().velocity.y < 0f &&
                     player.transform.position.y < ecart)

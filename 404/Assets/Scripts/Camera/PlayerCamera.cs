@@ -13,14 +13,4 @@ public class PlayerCamera : MonoBehaviour
     public Transform CameraPointLeft { get { return cameraPointLeft; } }
 
     public Transform CameraPointRight { get { return cameraPointRight; } }
-
-    void Start ()
-    {
-		
-	}
-	
-	void Update ()
-    {
-		
-	}
 }
