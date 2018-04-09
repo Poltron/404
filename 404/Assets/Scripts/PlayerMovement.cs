@@ -57,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
 	private float gravity;
 
 	private Transform myTransform;
-	private Rigidbody2D myRigidBody;
+    private Animator myAnimator;
+    private Rigidbody2D myRigidBody;
 
 
 	#endregion
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
+        myAnimator = gameObject.GetComponent<Animator>();
 		gravity = defaulGravity;
 	}
 
@@ -76,7 +78,8 @@ public class PlayerMovement : MonoBehaviour
 	private void Update()
 	{
 		KeyUpdate();
-	}
+        UpdateAnimator();
+    }
 	private void FixedUpdate()
 	{
 		Move();
@@ -101,6 +104,56 @@ public class PlayerMovement : MonoBehaviour
 			isKeyJump = false;
 	}
 
+    private void UpdateAnimator()
+    {
+        // si le joueur est sur le sol
+        if (IsOnGround())
+        { 
+            if (myRigidBody.velocity.x < 0) // et qu'il bouge vers la gauche
+            {
+                if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                {
+                    myAnimator.SetTrigger("isWalking");
+                }
+
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if(myRigidBody.velocity.x > 0) // et qu'il bouge vers la droite
+            {
+                if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                {
+                    myAnimator.SetTrigger("isWalking");
+                }
+
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
+            else // et qu'il bouge ne bouge pas
+            {
+                if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    myAnimator.SetTrigger("isIdle");
+                }
+            }
+        }
+        else // si il n'est pas sur le sol
+        {
+            if (myRigidBody.velocity.y < 0) // et qu'il tombe
+            {
+                if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Fall"))
+                {
+                    myAnimator.SetTrigger("isFalling");
+                }
+            }
+            else // et qu'il monte
+            {
+                if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+                {
+                    myAnimator.SetTrigger("isJumping");
+                }
+            }
+        }
+    }
+
 	public void Move()
 	{
 		if (isMovingLeft)
@@ -111,8 +164,6 @@ public class PlayerMovement : MonoBehaviour
 
 			myRigidBody.velocity = moveDirection;
 
-            GetComponent<SpriteRenderer>().flipX = false;
-
 			return;
 		}
 		else if (isMovingRight)
@@ -122,8 +173,6 @@ public class PlayerMovement : MonoBehaviour
 			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
 
 			myRigidBody.velocity = moveDirection;
-
-            GetComponent<SpriteRenderer>().flipX = true;
 
             return;
 		}
@@ -144,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
 
 				moveDirection.y = JumpForce(jumpHeight, jumpTime);
 				myRigidBody.velocity = moveDirection;
+                myAnimator.SetTrigger("isJumping");
 			}
 		}
 	}

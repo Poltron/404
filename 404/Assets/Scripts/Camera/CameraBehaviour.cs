@@ -45,7 +45,7 @@ public class CameraBehaviour : MonoBehaviour
         Vector3 newPos = new Vector3();
         if (state == CamState.FollowingPlayer)
         {
-            if (player.GetComponent<SpriteRenderer>().flipX)
+            if (!player.GetComponent<SpriteRenderer>().flipX)
             {
                 newPos.x = Vector3.Lerp(transform.position, player.CameraPointRight.transform.position, speedLerpToRight * Time.deltaTime).x;
             }
