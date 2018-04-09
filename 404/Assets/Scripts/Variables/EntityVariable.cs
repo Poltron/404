@@ -4,23 +4,34 @@ using UnityEngine;
 
 namespace Adventure
 {
+	public enum EViewable
+	{
+		Show = 1 << 0,
+		CryptName = 1 << 1,
+		CryptValue = 1 << 2,
+		Hide = 1 << 3,
+
+		FullCrypt = CryptName | CryptValue
+	}
+
 	[System.Serializable]
 	public class EntityVariable
 	{
 		[SerializeField]
 		private string value;
 		[SerializeField]
-		private AVariable checker;
+		private AVariable reference;
 		[SerializeField]
-		private bool viewable;
+		private EViewable viewable;
 
 		public string Value => value;
-		public string Name => checker.VisualName;
+		public string Name => reference.VisualName;
+		public EViewable Viewable => viewable;
 
 		public void Set(string newValue)
 		{
 			newValue = newValue.ToUpper();
-			if (checker.Set(newValue))
+			if (reference.Set(newValue))
 			{
 				value = newValue;
 				InvokeOnSetValue(value);

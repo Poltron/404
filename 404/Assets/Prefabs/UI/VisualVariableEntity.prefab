@@ -119,7 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -152,13 +152,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objName: {fileID: 114572314631381546}
   contentVariable: {fileID: 224175826064528564}
+  prefabVisualVariable: {fileID: 114076540757432898, guid: 422719a1df366bf4393b86054251bae5,
+    type: 2}
 --- !u!114 &114877022559901662
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1340563430576340}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

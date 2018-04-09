@@ -11,7 +11,9 @@ namespace Adventure
 		private Text objName;
 		[SerializeField]
 		private RectTransform contentVariable;
-		private List<Text> allVariables;
+		[SerializeField]
+		private VisualVariable prefabVisualVariable;
+		private List<VisualVariable> allVariables;
 		private Camera mainCamera;
 		private Transform owner;
 
@@ -40,27 +42,16 @@ namespace Adventure
 
 		private void InitVariable(InteractiveBehaviour entity)
 		{
-			allVariables = new List<Text>();
+			allVariables = new List<VisualVariable>();
 
 			foreach (EntityVariable variable in entity.GetAllVariable())
 			{
-				Text viewVariable = Instantiate(objName, contentVariable);
-				viewVariable.resizeTextForBestFit = false;
-				viewVariable.alignment = TextAnchor.MiddleLeft;
-				Destroy(viewVariable.GetComponent<LayoutElement>());
-
-				variable.AddOnSetValue(delegate {
-					UpdateVariable(viewVariable, variable);
-				});
-
-				viewVariable.text = variable.Name + " : " + variable.Value;
+				if (variable.Viewable == EViewable.Hide)
+					continue;
+				VisualVariable viewVariable = Instantiate(prefabVisualVariable, contentVariable);
+				viewVariable.Init(variable);
 				allVariables.Add(viewVariable);
 			}
-		}
-
-		private void UpdateVariable(Text textView, EntityVariable variable)
-		{
-			textView.text = variable.Name + " : " + variable.Value;
 		}
 	}
 }
