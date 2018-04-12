@@ -8,13 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd441f8711cb4774f91d832f7b20306e, type: 3}
-  m_Name: PlayerName
+  m_Script: {fileID: 11500000, guid: e50a5e7228a2e1f4f9c75abcdeaf4f8f, type: 3}
+  m_Name: PlayerScore
   m_EditorClassIdentifier: 
-  visualName: NAME
-  acceptedValue:
-  - KENNY
-  - JEREMIE
-  - ETIENNE
-  - GUILLAUME
-  - MAXIME
+  visualName: Score
+  min: 0
+  max: 1000

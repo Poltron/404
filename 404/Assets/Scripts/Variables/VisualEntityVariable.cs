@@ -17,11 +17,17 @@ namespace Adventure
 		private Camera mainCamera;
 		private Transform owner;
 
+		private ConsoleDictionnary dico;
+		private ConsoleLine console;
+
 		public void Init(InteractiveBehaviour entity)
 		{
 			owner = entity.transform;
-			mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+			mainCamera = GameObject.FindGameObjectWithTag(Constantes.Tag.MainCamera).GetComponent<Camera>();
 			objName.text = entity.Name;
+
+			console = FindObjectOfType<ConsoleLine>();
+			dico = console.GetComponent<ConsoleDictionnary>();
 
 			InitTransform();
 			InitVariable(entity);

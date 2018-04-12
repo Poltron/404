@@ -26,16 +26,19 @@ namespace Adventure
 
 		public string Value => value;
 		public string Name => reference.VisualName;
+		public string TrueName => reference.name;
 		public EViewable Viewable => viewable;
 
-		public void Set(string newValue)
+		public bool Set(string newValue)
 		{
 			newValue = newValue.ToUpper();
 			if (reference.Set(newValue))
 			{
 				value = newValue;
 				InvokeOnSetValue(value);
+				return true;
 			}
+			return false;
 		}
 
 		#region Event

@@ -11,6 +11,17 @@ namespace Adventure
 		private void Awake()
 		{
 			objectView = new List<InteractiveBehaviour>();
+			InteractiveBehaviour.AddOnCameraView(UpdateObjectInView);
+		}
+
+		private void OnDestroy()
+		{
+			InteractiveBehaviour.RemoveOnCameraView(UpdateObjectInView);
+		}
+
+		public IReadOnlyCollection<InteractiveBehaviour> GetAllObjectInView()
+		{
+			return objectView.AsReadOnly();
 		}
 
 		private void UpdateObjectInView(InteractiveBehaviour obj, bool inView)

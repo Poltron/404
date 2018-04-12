@@ -47,9 +47,12 @@ namespace Adventure
 		private RectTransform helpDico;
 		[SerializeField]
 		private Text dicoText;
+		private string currentColor;
 
+		public string ColorString => currentColor;
 		private ConsoleLine console;
 
+		#region Start&Initialisation
 		private void Awake()
 		{
 			commandRoot = new Command();
@@ -64,7 +67,7 @@ namespace Adventure
 			console.AddOnFailedCommand(OnFailed);
 			console.AddOnActiveCommande(ActiveText);
 			console.AddOnWriteCommand(AutoCompletion);
-			AutoCompletion(new string[] { "" });
+			AutoCompletion(new string[] { });
 			ActiveText(false);
 		}
 
@@ -123,6 +126,7 @@ namespace Adventure
 
 			return currentCmd;
 		}
+		#endregion
 
 		public string[] GetCommand()
 		{
@@ -153,21 +157,25 @@ namespace Adventure
 
 			currentCommand = commandRoot;
 			FindLink(words);
-			dicoText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(currentCommand.color) + ">";
+			currentColor = ColorUtility.ToHtmlStringRGBA(currentCommand.color);
+			dicoText.text = "<color=#" + currentColor + ">";
 			WriteAutoCompletion(lastArg);
+			dicoText.text += "</color>";
+
 			return ConsoleLine.ECommandResult.Successed;
 		}
 
-		private void FindLink(string[] args)
+		private bool FindLink(string[] args)
 		{
 			for (int i = 0 ; i < args.Length ; ++i)
 			{
 				Command commandFound = currentCommand.FindValue(args[i]);
 
 				if (commandFound == null)
-					return;
+					return false;
 				currentCommand = commandFound;
 			}
+			return true;
 		}
 
 		private void WriteAutoCompletion(string lastArg)
@@ -185,7 +193,6 @@ namespace Adventure
 			}
 			if (dicoText.text.Length > 0)
 				dicoText.text = dicoText.text.Remove(dicoText.text.Length - 1);
-			dicoText.text += "</color>";
 			ActiveText(find);
 		}
 
