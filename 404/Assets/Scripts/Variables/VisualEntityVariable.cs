@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,9 @@ namespace Adventure
 
 			console = FindObjectOfType<ConsoleLine>();
 			dico = console.GetComponent<ConsoleDictionnary>();
+
+			console.AddOnWriteCommand(SetColor);
+			console.AddOnActiveCommande(OnActiveConsole);
 
 			InitTransform();
 			InitVariable(entity);
@@ -58,6 +62,31 @@ namespace Adventure
 				viewVariable.Init(variable);
 				allVariables.Add(viewVariable);
 			}
+		}
+
+		public ConsoleLine.ECommandResult SetColor(string[] words)
+		{
+			int depth;
+			ConsoleDictionnary.Command command = dico.FindLink(words, out depth);
+			if (!command.discover || depth < words.Length)
+			{
+				foreach (VisualVariable visual in allVariables)
+					visual.ResetColor();
+				return ConsoleLine.ECommandResult.Failed;
+			}
+
+			foreach (VisualVariable visual in allVariables)
+			{
+				visual.WriteCommand(command);
+			}
+
+			return ConsoleLine.ECommandResult.Successed;
+		}
+
+		public void OnActiveConsole(bool b)
+		{
+			foreach (VisualVariable visual in allVariables)
+				visual.ResetColor();
 		}
 	}
 }

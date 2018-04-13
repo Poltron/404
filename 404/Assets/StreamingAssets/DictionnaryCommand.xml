@@ -8,7 +8,7 @@
 		<color>ff0000ff</color>
 		<command>
 			<value>princess</value>
-			<discover>true</discover>
+			<discover>false</discover>
 			<color>0000ffff</color>
 		</command>
 		<command>
@@ -56,7 +56,7 @@
 			<discover>false</discover>
 			<color>0000ffff</color>
 			<command>
-				<value>true</value>
+				<value>false</value>
 				<discover>false</discover>
 				<color>0000ffff</color>
 			</command>

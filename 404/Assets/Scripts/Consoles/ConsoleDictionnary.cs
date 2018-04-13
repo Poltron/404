@@ -9,7 +9,7 @@ namespace Adventure
 	public class ConsoleDictionnary : MonoBehaviour
 	{
 		[System.Serializable]
-		private class Command
+		public class Command
 		{
 			public string value;
 			public bool discover;
@@ -151,12 +151,18 @@ namespace Adventure
 			helpDico.gameObject.SetActive(active);
 		}
 
-		public ConsoleLine.ECommandResult AutoCompletion(string[] words)
+		private ConsoleLine.ECommandResult AutoCompletion(string[] words)
 		{
 			string lastArg = words.Length > 0 ? words[words.Length - 1] : "";
+			int depth;
 
-			currentCommand = commandRoot;
-			FindLink(words);
+			//currentCommand = commandRoot;
+			currentCommand = FindLink(words, out depth);
+			if (depth < words.Length)
+			{
+				ActiveText(false);
+				return ConsoleLine.ECommandResult.Failed;
+			}
 			currentColor = ColorUtility.ToHtmlStringRGBA(currentCommand.color);
 			dicoText.text = "<color=#" + currentColor + ">";
 			WriteAutoCompletion(lastArg);
@@ -165,17 +171,36 @@ namespace Adventure
 			return ConsoleLine.ECommandResult.Successed;
 		}
 
-		private bool FindLink(string[] args)
+		public Command FindLink(string[] args)
 		{
+			Command cmd = commandRoot;
+
 			for (int i = 0 ; i < args.Length ; ++i)
 			{
-				Command commandFound = currentCommand.FindValue(args[i]);
+				Command commandFound = cmd.FindValue(args[i]);
 
 				if (commandFound == null)
-					return false;
-				currentCommand = commandFound;
+					return cmd;
+				cmd = commandFound;
 			}
-			return true;
+			return cmd;
+		}
+
+		public Command FindLink(string[] args, out int depth)
+		{
+			depth = 1;
+			Command cmd = commandRoot;
+
+			for (int i = 0 ; i < args.Length ; ++i)
+			{
+				Command commandFound = cmd.FindValue(args[i]);
+
+				if (commandFound == null)
+					return cmd;
+				cmd = commandFound;
+				++depth;
+			}
+			return cmd;
 		}
 
 		private void WriteAutoCompletion(string lastArg)
@@ -185,6 +210,8 @@ namespace Adventure
 
 			foreach (Command nextData in currentCommand.linkCommand)
 			{
+				if (!nextData.discover)
+					continue;
 				if (showAll || nextData.value.StartsWith(lastArg, System.StringComparison.InvariantCultureIgnoreCase))
 				{
 					dicoText.text += nextData.value + "\n";

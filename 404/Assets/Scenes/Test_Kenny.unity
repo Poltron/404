@@ -771,7 +771,7 @@ Prefab:
     - target: {fileID: 224873345509692152, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 224873345509692152, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
@@ -816,7 +816,7 @@ Prefab:
     - target: {fileID: 224175826064528564, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 224175826064528564, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
@@ -841,7 +841,7 @@ Prefab:
     - target: {fileID: 224365747439590902, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 224365747439590902, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
@@ -851,7 +851,7 @@ Prefab:
     - target: {fileID: 224365747439590902, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 224175826064528564, guid: d823ad2e4b081424782b652e424fef28,
         type: 2}
@@ -1036,8 +1036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8039f166325c2429bdcf20639bdde5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsToInstantiate:
-  - {fileID: 114114296540512944, guid: 1bb41583b08450d469cab3c1af00e0f7, type: 2}
+  objectsToInstantiate: []
   worldCamera: {fileID: 658368496}
   contentText: {fileID: 1565144393}
   textColumn: {fileID: 114782148583784248, guid: 6bfd6e27273575d498f480af869f7809,
@@ -1406,13 +1405,13 @@ MonoBehaviour:
     viewable: 1
   - value: 10
     reference: {fileID: 11400000, guid: 0d80c0309c188c54bb788bc391a41ab1, type: 2}
-    viewable: 2
+    viewable: 1
   - value: FIST
     reference: {fileID: 11400000, guid: dfd0eec4e0e6f4a4f8b7991b4ff0112b, type: 2}
-    viewable: 4
-  - value: 0
-    reference: {fileID: 11400000, guid: b44cf328e320f6747b7230ce1159ac3d, type: 2}
-    viewable: 6
+    viewable: 1
+  - value: TRUE
+    reference: {fileID: 11400000, guid: 80085cba67aa2434fb824aac42263bad, type: 2}
+    viewable: 1
 --- !u!1 &1784585456
 GameObject:
   m_ObjectHideFlags: 0
