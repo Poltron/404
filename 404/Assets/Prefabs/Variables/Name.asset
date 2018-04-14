@@ -9,12 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd441f8711cb4774f91d832f7b20306e, type: 3}
-  m_Name: PlayerName
+  m_Name: Name
   m_EditorClassIdentifier: 
-  visualName: NAME
+  visualName: 
   acceptedValue:
-  - KENNY
-  - JEREMIE
-  - ETIENNE
-  - GUILLAUME
-  - MAXIME
+  - PLAYER

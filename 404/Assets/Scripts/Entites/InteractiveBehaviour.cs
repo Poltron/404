@@ -18,11 +18,11 @@ namespace Adventure
 		[SerializeField]
 		private List<EntityVariable> defaultVariables;
 		private Dictionary<string, EntityVariable> allVariables;
-		private InteractiveView cameraView;
+
+		private VisualEntityVariable visualVariable;
 
 		private void Awake()
 		{
-			cameraView = GameObject.FindGameObjectWithTag(Constantes.Tag.MainCamera).GetComponent<InteractiveView>();
 			allVariables = new Dictionary<string, EntityVariable>();
 
 			foreach (EntityVariable v in defaultVariables)
@@ -31,7 +31,14 @@ namespace Adventure
 				allVariables.Add(v.Name, v);
 			}
 
-			GetComponentInChildren<VisualEntityVariable>().Init(this);
+			visualVariable = GetComponentInChildren<VisualEntityVariable>();
+			visualVariable.Init(this);
+		}
+
+		private void OnDestroy()
+		{
+			if (visualVariable)
+				Destroy(visualVariable.gameObject);
 		}
 
 		public IReadOnlyCollection<EntityVariable> GetAllVariable()

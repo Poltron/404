@@ -4,38 +4,45 @@ using UnityEngine;
 
 namespace Adventure
 {
-	public class SetCommand : MonoBehaviour
+	public class RemoveCommand : MonoBehaviour
 	{
 		private InteractiveView cameraView;
 		private ConsoleLine console;
 
-		private void Start()
+		void Start()
 		{
 			console = GetComponentInParent<ConsoleLine>();
-			console.AddOnSendCommand(Constantes.Command.Set, Do);
+			console.AddOnSendCommand(Constantes.Command.Remove, Do);
 
 			cameraView = GameObject.FindGameObjectWithTag(Constantes.Tag.MainCamera).GetComponent<InteractiveView>();
 		}
 
 		private void OnDestroy()
 		{
-			console.RemoveOnSendCommand(Constantes.Command.Set, Do);
+			console.RemoveOnSendCommand(Constantes.Command.Remove, Do);
 		}
 
 		private ConsoleLine.ECommandResult Do(string[] words)
 		{
-			if (words.Length != 2)
+			if (words.Length != 1)
 			{
 				return ConsoleLine.ECommandResult.Failed;
 			}
-			string variableName = words[0];
-			string variableValue = words[1];
+			string entityName = words[0];
 			ConsoleLine.ECommandResult result = ConsoleLine.ECommandResult.Failed;
+			List<GameObject> toDestroy = new List<GameObject>();
 
 			foreach (InteractiveBehaviour obj in cameraView.GetAllObjectInView())
 			{
-				if (obj.SetVariable(variableName, variableValue, false))
-					result = ConsoleLine.ECommandResult.Successed;
+				if (string.Compare(obj.Name, entityName, true) == 0)
+					toDestroy.Add(obj.gameObject);
+			}
+
+			while (toDestroy.Count > 0)
+			{
+				GameObject objToDestroy = toDestroy[0];
+				toDestroy.RemoveAt(0);
+				Destroy(objToDestroy);
 			}
 
 			return result;

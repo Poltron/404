@@ -16,16 +16,18 @@ namespace Adventure
 		private VisualVariable prefabVisualVariable;
 		private List<VisualVariable> allVariables;
 		private Camera mainCamera;
-		private Transform owner;
+		private InteractiveBehaviour owner;
+		private Transform ownerTransform;
 
 		private ConsoleDictionnary dico;
 		private ConsoleLine console;
 
 		public void Init(InteractiveBehaviour entity)
 		{
-			owner = entity.transform;
+			owner = entity;
+			ownerTransform = entity.transform;
 			mainCamera = GameObject.FindGameObjectWithTag(Constantes.Tag.MainCamera).GetComponent<Camera>();
-			objName.text = entity.Name;
+			objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
 
 			console = FindObjectOfType<ConsoleLine>();
 			dico = console.GetComponent<ConsoleDictionnary>();
@@ -37,9 +39,15 @@ namespace Adventure
 			InitVariable(entity);
 		}
 
+		private void OnDestroy()
+		{
+			console.RemoveOnWriteCommand(SetColor);
+			console.RemoveOnActiveCommande(OnActiveConsole);
+		}
+
 		private void Update()
 		{
-			transform.position = mainCamera.WorldToScreenPoint(owner.position);
+			transform.position = mainCamera.WorldToScreenPoint(ownerTransform.position);
 		}
 
 		private void InitTransform()
@@ -72,8 +80,15 @@ namespace Adventure
 			{
 				foreach (VisualVariable visual in allVariables)
 					visual.ResetColor();
+				objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(Color.white) + ">" + owner.Name + "</color>";
 				return ConsoleLine.ECommandResult.Failed;
 			}
+
+			ConsoleDictionnary.Command t = command.FindValue(owner.Name, 1);
+			if (t == null || !t.discover)
+				objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
+			else
+				objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(command.color) + ">" + owner.Name + "</color>";
 
 			foreach (VisualVariable visual in allVariables)
 			{
@@ -87,6 +102,7 @@ namespace Adventure
 		{
 			foreach (VisualVariable visual in allVariables)
 				visual.ResetColor();
+			objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(Color.white) + ">" + owner.Name + "</color>";
 		}
 	}
 }

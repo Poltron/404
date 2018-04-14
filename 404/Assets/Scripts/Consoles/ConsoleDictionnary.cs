@@ -38,6 +38,25 @@ namespace Adventure
 				}
 				return result;
 			}
+
+			public Command FindValue(string toFind, int depth)
+			{
+				if (string.Compare(value, toFind, true) == 0)
+					return this;
+
+				if (linkCommand.Count == 0 || depth == 0)
+					return null;
+				--depth;
+
+				Command result = null;
+				foreach (Command d in linkCommand)
+				{
+					result = d.FindValue(toFind, depth);
+					if (result != null)
+						return result;
+				}
+				return result;
+			}
 		}
 
 		private Command commandRoot;
@@ -218,7 +237,7 @@ namespace Adventure
 					find = true;
 				}
 			}
-			if (dicoText.text.Length > 0)
+			if (find && dicoText.text.Length > 0)
 				dicoText.text = dicoText.text.Remove(dicoText.text.Length - 1);
 			ActiveText(find);
 		}
