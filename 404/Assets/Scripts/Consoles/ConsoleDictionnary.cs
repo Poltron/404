@@ -224,7 +224,7 @@ namespace Adventure
 
 		private void WriteAutoCompletion(string lastArg)
 		{
-			bool find = false;
+			string variables = "";
 			bool showAll = lastArg == "";
 
 			foreach (Command nextData in currentCommand.linkCommand)
@@ -233,13 +233,15 @@ namespace Adventure
 					continue;
 				if (showAll || nextData.value.StartsWith(lastArg, System.StringComparison.InvariantCultureIgnoreCase))
 				{
-					dicoText.text += nextData.value + "\n";
-					find = true;
+					variables += nextData.value + "\n";
 				}
 			}
-			if (find && dicoText.text.Length > 0)
-				dicoText.text = dicoText.text.Remove(dicoText.text.Length - 1);
-			ActiveText(find);
+
+			if (variables.Length > 0)
+				variables = variables.Remove(variables.Length - 1);
+			dicoText.text += variables;
+
+			ActiveText(variables.Length > 0);
 		}
 
 		private ConsoleLine.ECommandResult OnSucced(string[] args)

@@ -4,70 +4,70 @@
   <color>FFFFFFFF</color>
   <command>
     <value>ADD</value>
-    <discover>False</discover>
+    <discover>True</discover>
     <color>FF0000FF</color>
     <command>
       <value>PRINCESS</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>0000FFFF</color>
     </command>
     <command>
       <value>KING</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>0000FFFF</color>
     </command>
   </command>
   <command>
     <value>REMOVE</value>
-    <discover>False</discover>
+    <discover>True</discover>
     <color>FF0000FF</color>
     <command>
       <value>PRINCESS</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>0000FFFF</color>
     </command>
     <command>
       <value>KING</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>0000FFFF</color>
     </command>
     <command>
       <value>PLAYER</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>FF0000FF</color>
     </command>
   </command>
   <command>
     <value>SET</value>
-    <discover>False</discover>
+    <discover>True</discover>
     <color>FF0000FF</color>
     <command>
       <value>WEAPON</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>00FF00FF</color>
       <command>
         <value>FIST</value>
-        <discover>False</discover>
+        <discover>True</discover>
         <color>0000FFFF</color>
       </command>
       <command>
         <value>SWORD</value>
-        <discover>False</discover>
+        <discover>True</discover>
         <color>0000FFFF</color>
       </command>
     </command>
     <command>
       <value>ALIVE</value>
-      <discover>False</discover>
+      <discover>True</discover>
       <color>0000FFFF</color>
       <command>
         <value>TRUE</value>
-        <discover>False</discover>
+        <discover>True</discover>
         <color>0000FFFF</color>
       </command>
       <command>
         <value>FALSE</value>
-        <discover>False</discover>
+        <discover>True</discover>
         <color>0000FFFF</color>
       </command>
     </command>

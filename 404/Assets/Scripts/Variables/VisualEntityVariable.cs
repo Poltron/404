@@ -14,6 +14,7 @@ namespace Adventure
 		private RectTransform contentVariable;
 		[SerializeField]
 		private VisualVariable prefabVisualVariable;
+
 		private List<VisualVariable> allVariables;
 		private Camera mainCamera;
 		private InteractiveBehaviour owner;
