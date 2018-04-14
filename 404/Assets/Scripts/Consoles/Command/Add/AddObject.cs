@@ -41,6 +41,7 @@ namespace Adventure
 		{
 			console.RemoveOnSendCommand(Constantes.Command.Add, Do);
 			console.RemoveOnActiveCommande(ShowVisual);
+			console.RemoveOnWriteCommand(ShowVisual);
 		}
 
 		private void DivideScreen()
@@ -79,6 +80,9 @@ namespace Adventure
 			if (words.Length != 3 || !int.TryParse(words[words.Length - 1], out numColumn)
 				|| numColumn < 1 || numColumn > nbrColumn)
 				return ConsoleLine.ECommandResult.Failed;
+			if (words[0].CompareTo(Constantes.Command.Add) != 0)
+				return ConsoleLine.ECommandResult.Failed;
+
 
 			visualColumns[numColumn - 1].ActiveVisual(true);
 			return ConsoleLine.ECommandResult.Successed;
@@ -111,7 +115,6 @@ namespace Adventure
 				return ConsoleLine.ECommandResult.Failed;
 			}
 
-			Debug.Log(objName);
 			InteractiveBehaviour toSpawn = objectsToInstantiate.Find(obj => string.Compare(obj.Name, objName, true) == 0);
 			if (toSpawn == null)
 			{

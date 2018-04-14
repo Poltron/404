@@ -9,7 +9,7 @@ namespace Adventure
 	public class ConsoleDictionnary : MonoBehaviour
 	{
 		[System.Serializable]
-		private class Command
+		public class Command
 		{
 			public string value;
 			public bool discover;
@@ -38,6 +38,25 @@ namespace Adventure
 				}
 				return result;
 			}
+
+			public Command FindValue(string toFind, int depth)
+			{
+				if (string.Compare(value, toFind, true) == 0)
+					return this;
+
+				if (linkCommand.Count == 0 || depth == 0)
+					return null;
+				--depth;
+
+				Command result = null;
+				foreach (Command d in linkCommand)
+				{
+					result = d.FindValue(toFind, depth);
+					if (result != null)
+						return result;
+				}
+				return result;
+			}
 		}
 
 		private Command commandRoot;
@@ -47,9 +66,12 @@ namespace Adventure
 		private RectTransform helpDico;
 		[SerializeField]
 		private Text dicoText;
+		private string currentColor;
 
+		public string ColorString => currentColor;
 		private ConsoleLine console;
 
+		#region Start&Initialisation
 		private void Awake()
 		{
 			commandRoot = new Command();
@@ -64,7 +86,7 @@ namespace Adventure
 			console.AddOnFailedCommand(OnFailed);
 			console.AddOnActiveCommande(ActiveText);
 			console.AddOnWriteCommand(AutoCompletion);
-			AutoCompletion(new string[] { "" });
+			AutoCompletion(new string[] { });
 			ActiveText(false);
 		}
 
@@ -123,6 +145,7 @@ namespace Adventure
 
 			return currentCmd;
 		}
+		#endregion
 
 		public string[] GetCommand()
 		{
@@ -147,46 +170,78 @@ namespace Adventure
 			helpDico.gameObject.SetActive(active);
 		}
 
-		public ConsoleLine.ECommandResult AutoCompletion(string[] words)
+		private ConsoleLine.ECommandResult AutoCompletion(string[] words)
 		{
 			string lastArg = words.Length > 0 ? words[words.Length - 1] : "";
+			int depth;
 
-			currentCommand = commandRoot;
-			FindLink(words);
-			dicoText.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(currentCommand.color) + ">";
+			//currentCommand = commandRoot;
+			currentCommand = FindLink(words, out depth);
+			if (depth < words.Length)
+			{
+				ActiveText(false);
+				return ConsoleLine.ECommandResult.Failed;
+			}
+			currentColor = ColorUtility.ToHtmlStringRGBA(currentCommand.color);
+			dicoText.text = "<color=#" + currentColor + ">";
 			WriteAutoCompletion(lastArg);
+			dicoText.text += "</color>";
+
 			return ConsoleLine.ECommandResult.Successed;
 		}
 
-		private void FindLink(string[] args)
+		public Command FindLink(string[] args)
 		{
+			Command cmd = commandRoot;
+
 			for (int i = 0 ; i < args.Length ; ++i)
 			{
-				Command commandFound = currentCommand.FindValue(args[i]);
+				Command commandFound = cmd.FindValue(args[i]);
 
 				if (commandFound == null)
-					return;
-				currentCommand = commandFound;
+					return cmd;
+				cmd = commandFound;
 			}
+			return cmd;
+		}
+
+		public Command FindLink(string[] args, out int depth)
+		{
+			depth = 1;
+			Command cmd = commandRoot;
+
+			for (int i = 0 ; i < args.Length ; ++i)
+			{
+				Command commandFound = cmd.FindValue(args[i]);
+
+				if (commandFound == null)
+					return cmd;
+				cmd = commandFound;
+				++depth;
+			}
+			return cmd;
 		}
 
 		private void WriteAutoCompletion(string lastArg)
 		{
-			bool find = false;
+			string variables = "";
 			bool showAll = lastArg == "";
 
 			foreach (Command nextData in currentCommand.linkCommand)
 			{
+				if (!nextData.discover)
+					continue;
 				if (showAll || nextData.value.StartsWith(lastArg, System.StringComparison.InvariantCultureIgnoreCase))
 				{
-					dicoText.text += nextData.value + "\n";
-					find = true;
+					variables += nextData.value + "\n";
 				}
 			}
-			if (dicoText.text.Length > 0)
-				dicoText.text = dicoText.text.Remove(dicoText.text.Length - 1);
-			dicoText.text += "</color>";
-			ActiveText(find);
+
+			if (variables.Length > 0)
+				variables = variables.Remove(variables.Length - 1);
+			dicoText.text += variables;
+
+			ActiveText(variables.Length > 0);
 		}
 
 		private ConsoleLine.ECommandResult OnSucced(string[] args)
