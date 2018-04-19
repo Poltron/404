@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private CanvasGroup gameplayUI;
-
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

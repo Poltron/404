@@ -253,7 +253,7 @@ Prefab:
     - target: {fileID: 224830371943914292, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 224830371943914292, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
@@ -263,7 +263,7 @@ Prefab:
     - target: {fileID: 224830371943914292, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 224734941896492644, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
@@ -273,7 +273,7 @@ Prefab:
     - target: {fileID: 224734941896492644, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 224691221004345356, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
@@ -388,6 +388,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 225428876241726242, guid: 29967c8defd204c42b5a00feb50c27e8,
+        type: 2}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 29967c8defd204c42b5a00feb50c27e8, type: 2}
@@ -624,7 +629,7 @@ Prefab:
     - target: {fileID: 224077548243401310, guid: b3e0d2a6645c602468c4e51f5386b6a6,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 224077548243401310, guid: b3e0d2a6645c602468c4e51f5386b6a6,
         type: 2}
@@ -634,7 +639,7 @@ Prefab:
     - target: {fileID: 224077548243401310, guid: b3e0d2a6645c602468c4e51f5386b6a6,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 224584433088541150, guid: b3e0d2a6645c602468c4e51f5386b6a6,
         type: 2}
@@ -644,7 +649,7 @@ Prefab:
     - target: {fileID: 224584433088541150, guid: b3e0d2a6645c602468c4e51f5386b6a6,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3e0d2a6645c602468c4e51f5386b6a6, type: 2}
