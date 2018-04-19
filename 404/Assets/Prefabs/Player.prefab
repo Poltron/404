@@ -199,7 +199,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1228910221958328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4213007487897462}
@@ -225,7 +225,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331322303280398}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4681012215327290}
@@ -298,7 +298,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779235427416082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4681012215327290}
@@ -341,7 +341,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.8, y: 1.1}
-    newSize: {x: 6.4, y: 4.8}
+    newSize: {x: 0.8, y: 1.1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -462,6 +462,7 @@ MonoBehaviour:
   contentVariable: {fileID: 224077548243401310}
   prefabVisualVariable: {fileID: 114076540757432898, guid: 422719a1df366bf4393b86054251bae5,
     type: 2}
+  mainCamera: {fileID: 0}
 --- !u!114 &114449363958502580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -475,7 +476,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objName: PLAYER
   targetVisual: {fileID: 4045142970426692}
-  defaultVariables: []
+  defaultVariables:
+  - value: Fist
+    reference: {fileID: 11400000, guid: dfd0eec4e0e6f4a4f8b7991b4ff0112b, type: 2}
+    viewable: 1
+  - value: True
+    reference: {fileID: 11400000, guid: 80085cba67aa2434fb824aac42263bad, type: 2}
+    viewable: 1
 --- !u!114 &114624137221410988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -603,7 +610,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.4, y: 4.8}
+  m_Size: {x: 0.8, y: 1.1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

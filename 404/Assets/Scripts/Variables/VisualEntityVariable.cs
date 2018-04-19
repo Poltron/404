@@ -16,6 +16,8 @@ namespace Adventure
 		private VisualVariable prefabVisualVariable;
 
 		private List<VisualVariable> allVariables;
+
+        [SerializeField]
 		private Camera mainCamera;
 		private InteractiveBehaviour owner;
 		private Transform target;
@@ -27,7 +29,6 @@ namespace Adventure
 		{
 			owner = entity;
 			this.target = target;
-			mainCamera = GameObject.FindGameObjectWithTag(Constantes.Tag.MainCamera).GetComponentInChildren<Camera>();
 			objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
 
 			console = FindObjectOfType<ConsoleLine>();

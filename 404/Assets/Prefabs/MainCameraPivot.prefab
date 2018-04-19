@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 124516186286584952}
   - component: {fileID: 81795551180674840}
   - component: {fileID: 114863268733717514}
+  - component: {fileID: 114868469541304672}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -130,8 +131,8 @@ MonoBehaviour:
   player: {fileID: 0}
   offsetY: 3.5
   distMaxY: -0.1
-  speedLerpToLeft: 15
-  speedLerpToRight: 15
+  speedLerpToLeft: 8
+  speedLerpToRight: 8
   speedLerpToCenter: 5
   speedLerpToFocus: 5
 --- !u!114 &114863268733717514
@@ -147,6 +148,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magnitude: 3
   frequency: 20
+--- !u!114 &114868469541304672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1962763974459988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f438cd484500e43a68b770e4842dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!124 &124516186286584952
 Behaviour:
   m_ObjectHideFlags: 1
