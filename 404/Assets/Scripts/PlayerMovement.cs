@@ -1,36 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
 	#region Private
-	#region isMovingRight
-	private bool isMovingRight = false;
 
-	public bool GetIsMovingRight()
-	{
-		return isMovingRight;
-	}
-	#endregion
-	#region isMovingLeft
-	private bool isMovingLeft = false;
+	private bool isMovingRight;
+	private bool isMovingLeft;
+	private bool isKeyJump;
 
-	public bool GetIsMovingLeft()
-	{
-		return isMovingLeft;
-	}
-	#endregion
-	#region isJumping
-	private bool isKeyJump = false;
+	private const float DefaulGravity = 9.81f;
+	private float gravity;
 
-	public bool GetIsJumping()
-	{
-		return isKeyJump;
-	}
+	private Transform myTransform;
+	private Animator myAnimator;
+	private Rigidbody2D myRigidBody;
+
 	#endregion
+
 	#region Inspector
-	#region Keys
+
 	[Header("Keys")]
 	[SerializeField]
 	private KeyCode keyRight;
@@ -38,28 +29,16 @@ public class PlayerMovement : MonoBehaviour
 	private KeyCode keyLeft;
 	[SerializeField]
 	private KeyCode keyJump;
-	#endregion
-	#region Jump
 	[Header("Jump")]
 	[SerializeField]
 	private float jumpHeight;
 	[SerializeField]
 	private float jumpTime;
-	#endregion
 	[Header("Variables")]
 	[SerializeField]
 	private List<Transform> feets;
 	[SerializeField]
 	private float speed;
-	#endregion
-
-	private float defaulGravity = 9.81f;
-	private float gravity;
-
-	private Transform myTransform;
-    private Animator myAnimator;
-    private Rigidbody2D myRigidBody;
-
 
 	#endregion
 
@@ -68,18 +47,14 @@ public class PlayerMovement : MonoBehaviour
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
         myAnimator = gameObject.GetComponent<Animator>();
-		gravity = defaulGravity;
-	}
-
-	private void Start()
-	{
+		gravity = DefaulGravity;
 	}
 
 	private void Update()
 	{
-		KeyUpdate();
         UpdateAnimator();
-    }
+		KeyUpdate();
+	}
 	private void FixedUpdate()
 	{
 		Move();
@@ -89,19 +64,17 @@ public class PlayerMovement : MonoBehaviour
 	public void KeyUpdate()
 	{
 		if (Input.GetKey(keyRight))
+		{
 			isMovingRight = true;
-		else
-			isMovingRight = false;
-
+		}
 		if (Input.GetKey(keyLeft))
+		{
 			isMovingLeft = true;
-		else
-			isMovingLeft = false;
-
+		}
 		if (Input.GetKeyDown(keyJump))
+		{
 			isKeyJump = true;
-		else
-			isKeyJump = false;
+		}
 	}
 
     private void UpdateAnimator()
@@ -164,9 +137,12 @@ public class PlayerMovement : MonoBehaviour
 
 			myRigidBody.velocity = moveDirection;
 
+			isMovingLeft = false;
+
 			return;
 		}
-		else if (isMovingRight)
+
+		if (isMovingRight)
 		{
 			Vector3 moveDirection = myRigidBody.velocity;
 
@@ -174,44 +150,39 @@ public class PlayerMovement : MonoBehaviour
 
 			myRigidBody.velocity = moveDirection;
 
-            return;
+			isMovingRight = false;
+
+			return;
 		}
-		else
-		{
-			myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
-		}
+
+		myRigidBody.velocity = new Vector2(0.0f, myRigidBody.velocity.y);
 	}
 
 	public void Jump()
 	{
-		if (isKeyJump)
-		{
-			if (IsOnGround())
-			{
-				//Debug.Log("Tata");
-				Vector3 moveDirection = myRigidBody.velocity;
+		if (!isKeyJump)
+			return;
+		if (!IsOnGround())
+			return;
 
-				moveDirection.y = JumpForce(jumpHeight, jumpTime);
-				myRigidBody.velocity = moveDirection;
-                myAnimator.SetTrigger("isJumping");
-			}
-		}
+		Vector3 moveDirection = myRigidBody.velocity;
+
+		Debug.Log("JE SUIS SUR LE SOL");
+		moveDirection.y = JumpForce(jumpHeight, jumpTime);
+		myRigidBody.velocity = moveDirection;
+		myAnimator.SetTrigger("isJumping");
+		isKeyJump = false;
 	}
 
 	public bool IsOnGround()
 	{
-	//Debug.Log("Titi");
 		foreach (var trans in feets)
 		{
-			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.2f);
+			var ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
 
-			foreach (RaycastHit2D r in ray)
+			if (ray.Any(r => r.transform.CompareTag("Platform")))
 			{
-				if (r.transform.tag == "Platform")
-				{
-					//Debug.Log("Toto");
-					return true;
-				}
+				return true;
 			}
 		}
 		return false;
@@ -223,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
 		return (4.0f * height) / time;
 	}
 
-	private float CalculeGravity(float height, float time)
+	private static float CalculeGravity(float height, float time)
 	{
 		return (8.0f * height) / (time * time);
 	}
