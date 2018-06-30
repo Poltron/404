@@ -17,18 +17,20 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     Text subtitleText;
 
+    Coroutine activeSubtitleRoutine;
+
     public void PlayDialog(DialogSO dialogObject)
     {
         if (dialogAudioSource.isPlaying)
         {
             dialogAudioSource.Stop();
-            StopCoroutine(AnimateSubtitles(dialogObject));
+            StopCoroutine(activeSubtitleRoutine);
         }
 
         dialogAudioSource.clip = dialogObject.clip;
         dialogAudioSource.Play();
 
-        StartCoroutine(AnimateSubtitles(dialogObject));
+        activeSubtitleRoutine = StartCoroutine(AnimateSubtitles(dialogObject));
     }
 
     private IEnumerator AnimateSubtitles(DialogSO dialog)

@@ -37,19 +37,14 @@ public class AudioTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("AudioTrigger enter");
-
         if (other.tag != "Player")
         {
             //Debug.LogError("AudioTrigger collided with something else than player : this should not happen. Check the Physics Collision Grid.");
             return;
         }
 
-        Debug.Log("AudioTrigger passed");
-
         if (!hasBeenPlayed)
         {
-            Debug.Log("AudioTrigger play");
             FindObjectOfType<AudioManager>().PlayDialog(dialog);
             hasBeenPlayed = true;
         }

@@ -19,7 +19,7 @@ MonoBehaviour:
     line: Alive he was
   - time: 4.7
     line: Ready to go on an adventure to find his princess
-  - time: 1
+  - time: 1.2
     line: But hurry,
   - time: 2.5
     line: An alive one is always better...
