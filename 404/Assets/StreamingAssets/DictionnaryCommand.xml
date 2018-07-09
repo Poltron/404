@@ -16,6 +16,16 @@
       <discover>True</discover>
       <color>0000FFFF</color>
     </command>
+    <command>
+      <value>DOOR</value>
+      <discover>True</discover>
+      <color>0000FFFF</color>
+    </command>
+    <command>
+      <value>BOULDER</value>
+      <discover>True</discover>
+      <color>0000FFFF</color>
+    </command>
   </command>
   <command>
     <value>REMOVE</value>

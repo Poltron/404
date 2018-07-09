@@ -34,6 +34,12 @@ namespace Adventure
 			console = FindObjectOfType<ConsoleLine>();
 			dico = console.GetComponent<ConsoleDictionnary>();
 
+            // temporary fix to add objects without having a ref to the main camera
+            if (mainCamera == null)
+            {
+                mainCamera = Camera.main;
+            }
+
 			console.AddOnWriteCommand(SetColor);
 			console.AddOnActiveCommande(OnActiveConsole);
 
