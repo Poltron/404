@@ -283,7 +283,7 @@ Prefab:
     - target: {fileID: 224691221004345356, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1759811110747144, guid: 29967c8defd204c42b5a00feb50c27e8, type: 2}
       propertyPath: m_IsActive
@@ -819,6 +819,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1881541919 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1044626883941584, guid: b3e0d2a6645c602468c4e51f5386b6a6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1302630914}
+--- !u!114 &1881541927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1881541919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0e781d9cc9af544a6466c1d7b7842e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1978835107 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1715186619082494, guid: 29967c8defd204c42b5a00feb50c27e8,

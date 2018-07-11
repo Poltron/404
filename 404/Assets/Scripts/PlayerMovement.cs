@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 	private Transform myTransform;
 	private Animator myAnimator;
 	private Rigidbody2D myRigidBody;
+	private StateMachine myStateMachine;
 
 	#endregion
 
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 		myTransform = transform;
 		myRigidBody = gameObject.GetComponent<Rigidbody2D>();
         myAnimator = gameObject.GetComponent<Animator>();
+		myStateMachine = gameObject.GetComponent<StateMachine>();
 		gravity = DefaulGravity;
 	}
 
@@ -131,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (isMovingLeft)
 		{
+			myStateMachine.SetState(StateMachine.State.MoveLeft);
 			Vector3 moveDirection = myRigidBody.velocity;
 
 			moveDirection.x = -1.0f * speed * 100f * Time.deltaTime;
@@ -144,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
 		if (isMovingRight)
 		{
+			myStateMachine.SetState(StateMachine.State.MoveRight);
 			Vector3 moveDirection = myRigidBody.velocity;
 
 			moveDirection.x = 1.0f * speed * 100f * Time.deltaTime;
@@ -167,18 +171,17 @@ public class PlayerMovement : MonoBehaviour
 
 		Vector3 moveDirection = myRigidBody.velocity;
 
-		Debug.Log("JE SUIS SUR LE SOL");
+		myStateMachine.SetState(StateMachine.State.Jump);
 		moveDirection.y = JumpForce(jumpHeight, jumpTime);
 		myRigidBody.velocity = moveDirection;
-		myAnimator.SetTrigger("isJumping");
 		isKeyJump = false;
 	}
 
 	public bool IsOnGround()
 	{
-		foreach (var trans in feets)
+		foreach (Transform trans in feets)
 		{
-			var ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
+			RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
 
 			if (ray.Any(r => r.transform.CompareTag("Platform")))
 			{
