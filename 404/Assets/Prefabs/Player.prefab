@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 95390895230364172}
   - component: {fileID: 212645907987228452}
   - component: {fileID: 50439164467907714}
-  - component: {fileID: 70529021402496580}
+  - component: {fileID: 70674760908203638}
   - component: {fileID: 114834393267104194}
   - component: {fileID: 114342295646647114}
   - component: {fileID: 114449363958502580}
@@ -315,7 +315,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 150
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -324,7 +324,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &70529021402496580
+--- !u!70 &70674760908203638
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -555,7 +555,7 @@ MonoBehaviour:
   keyRight: 275
   keyLeft: 276
   keyJump: 32
-  jumpHeight: 2
+  jumpHeight: 2.5
   jumpTime: 1
   feets:
   - {fileID: 4135614657695620}

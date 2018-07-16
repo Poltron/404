@@ -29,7 +29,6 @@ namespace Adventure
 				return ConsoleLine.ECommandResult.Failed;
 			}
 			string entityName = words[0];
-			ConsoleLine.ECommandResult result = ConsoleLine.ECommandResult.Failed;
 			List<GameObject> toDestroy = new List<GameObject>();
 
 			foreach (InteractiveBehaviour obj in cameraView.GetAllObjectInView())
@@ -38,6 +37,7 @@ namespace Adventure
 					toDestroy.Add(obj.gameObject);
 			}
 
+			ConsoleLine.ECommandResult result = toDestroy.Count > 0 ? ConsoleLine.ECommandResult.Successed : ConsoleLine.ECommandResult.Failed;
 			while (toDestroy.Count > 0)
 			{
 				GameObject objToDestroy = toDestroy[0];

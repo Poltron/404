@@ -121,7 +121,7 @@ namespace Adventure
 			cmd = "";
 			string[] words = text.Split(' ');
 			if (words.Length < 2)
-				return null;
+				return new string[0];
 
 			cmd = words[0];
 			string[] args = new string[words.Length - 1];
