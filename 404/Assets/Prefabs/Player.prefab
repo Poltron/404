@@ -555,8 +555,8 @@ MonoBehaviour:
   keyRight: 275
   keyLeft: 276
   keyJump: 32
-  jumpHeight: 2.5
-  jumpTime: 1
+  jumpHeight: 0.17
+  jumpTime: 0.1
   feets:
   - {fileID: 4135614657695620}
   - {fileID: 4231665172235538}
