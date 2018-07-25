@@ -7,7 +7,7 @@ namespace Adventure
 	public class Checkpoint : MonoBehaviour
 	{
 		private CheckpointManager manager;
-		private List<Respawnable> associatedRespawnable;
+		private List<IRespawnable> associatedRespawnable;
 		private InteractiveBehaviour player;
 		private LevelContainer levelContainer;
 
@@ -17,7 +17,7 @@ namespace Adventure
 		{
 			levelContainer = FindObjectOfType<LevelContainer>();
 			manager = GetComponentInParent<CheckpointManager>();
-			associatedRespawnable = new List<Respawnable>();
+			associatedRespawnable = new List<IRespawnable>();
 		}
 
 		private void OnTriggerEnter2D(Collider2D collision)
@@ -35,9 +35,7 @@ namespace Adventure
 			associatedRespawnable.Clear();
 			foreach (var obj in levelContainer.GetAllEntities())
 			{
-				Respawnable comp = obj.GetComponentInChildren<Respawnable>();
-				if (comp)
-					associatedRespawnable.Add(comp);
+				associatedRespawnable.Add(obj);
 			}
 
 			player = levelContainer.Player?.GetComponent<InteractiveBehaviour>();
@@ -46,7 +44,7 @@ namespace Adventure
 			else
 				Debug.LogError("There is no player");
 
-			foreach (Respawnable obj in associatedRespawnable)
+			foreach (IRespawnable obj in associatedRespawnable)
 			{
 				obj.SaveCheckpoint();
 			}
@@ -71,10 +69,17 @@ namespace Adventure
 
 		private void RespawnPlayer()
 		{
-			foreach (Respawnable obj in associatedRespawnable)
+			foreach (IRespawnable obj in associatedRespawnable)
 			{
 				obj.LoadCheckpoint();
 			}
+
+			foreach (var obj in levelContainer.GetAllEntities())
+			{
+				if (!associatedRespawnable.Contains(obj))
+					obj.SetActive(false);
+			}
+
 			player.transform.position = transform.position;
 			player.GetVariable("LIFE").Set("10");
 		}

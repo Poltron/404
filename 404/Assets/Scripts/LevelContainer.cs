@@ -7,7 +7,7 @@ namespace Adventure
 {
 	public class LevelContainer : MonoBehaviour
 	{
-		private HashSet<InteractiveBehaviour> allEntities;
+		private HashSet<IRespawnable> allEntities;
 		private GameObject player;
 		private Camera cam;
 
@@ -32,13 +32,17 @@ namespace Adventure
 
 		private void Awake()
 		{
-			allEntities = new HashSet<InteractiveBehaviour>();
+			allEntities = new HashSet<IRespawnable>();
 			InteractiveBehaviour.AddOnCreateEntity(UpdateEntities);
 		}
 
 		private void Start()
 		{
-
+			var at = FindObjectsOfType<AudioTrigger>();
+			foreach (var t in at)
+			{
+				allEntities.Add(t);
+			}
 		}
 
 		private void OnDestroy()
@@ -48,13 +52,18 @@ namespace Adventure
 
 		private void UpdateEntities(InteractiveBehaviour obj, bool isCreated)
 		{
-			if (isCreated)
-				allEntities.Add(obj);
-			else
-				allEntities.Remove(obj);
+			IRespawnable[] respawnablesComp = obj.GetComponentsInChildren<IRespawnable>();
+
+			foreach (IRespawnable comp in respawnablesComp)
+			{
+				if (isCreated)
+					allEntities.Add(comp);
+				else
+					allEntities.Remove(comp);
+			}
 		}
 
-		public IReadOnlyCollection<InteractiveBehaviour> GetAllEntities()
+		public IReadOnlyCollection<IRespawnable> GetAllEntities()
 		{
 			return allEntities.ToList().AsReadOnly();
 		}

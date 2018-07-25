@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Adventure
 {
 	[RequireComponent(typeof(InteractiveBehaviour))]
-	public class Respawnable : MonoBehaviour
+	public class Respawnable : MonoBehaviour, IRespawnable
 	{
 		[System.Serializable]
 		private class SaveValue
