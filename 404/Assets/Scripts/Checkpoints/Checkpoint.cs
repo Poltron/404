@@ -64,21 +64,26 @@ namespace Adventure
 			if (!int.TryParse(value, out life))
 				return;
 			if (life == 0)
-				RespawnPlayer();
+				StartCoroutine(RespawnPlayer());
 		}
 
-		private void RespawnPlayer()
+		private IEnumerator RespawnPlayer()
 		{
 			foreach (IRespawnable obj in associatedRespawnable)
 			{
 				obj.LoadCheckpoint();
 			}
+			yield return null;
 
-			foreach (var obj in levelContainer.GetAllEntities())
+			foreach (IRespawnable obj in levelContainer.GetAllEntities())
 			{
 				if (!associatedRespawnable.Contains(obj))
-					obj.SetActive(false);
+				{
+					(obj as Respawnable)?.gameObject.SetActive(false);
+				}
 			}
+
+			yield return null;
 
 			player.transform.position = transform.position;
 			player.GetVariable("LIFE").Set("10");
