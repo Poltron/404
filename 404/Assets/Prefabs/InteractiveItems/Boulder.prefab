@@ -54,9 +54,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4888146103405348}
   - component: {fileID: 212927875337322550}
-  - component: {fileID: 114563421867702334}
-  - component: {fileID: 50483136664803850}
   - component: {fileID: 58736917590474890}
+  - component: {fileID: 50483136664803850}
+  - component: {fileID: 114563421867702334}
+  - component: {fileID: 114512091526725804}
   m_Layer: 0
   m_Name: Boulder
   m_TagString: Untagged
@@ -118,8 +119,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1483433895768792}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -23.607037, y: 17.82284, z: 0.58984375}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 224807065365606432}
@@ -281,6 +282,24 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114512091526725804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1483433895768792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7323443331d284894a316c783addcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  variablesToSave:
+  - name: POSITION
+    value: 
+  - name: ROTATION
+    value: 
+  - name: ACTIVE
+    value: 
 --- !u!114 &114555747282623282
 MonoBehaviour:
   m_ObjectHideFlags: 1

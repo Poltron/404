@@ -9,7 +9,7 @@ namespace Adventure
 		public static string Crypt(this string s)
 		{
 			string crypted = "";
-			string value = "&#$£!?%@";
+			string value = "&#$£!?%@+*~<>=";
 			int nbrValue = value.Length;
 
 			for (int i = 0 ; i < s.Length ; ++i)
@@ -18,6 +18,16 @@ namespace Adventure
 			}
 
 			return crypted;
+		}
+
+		public static bool ContainsKey<TValue>(this Dictionary<string, TValue> container, string key, bool ignoreCase)
+		{
+			foreach (KeyValuePair<string, TValue> pair in container)
+			{
+				if (string.Compare(pair.Key, key, ignoreCase) == 0)
+					return true;
+			}
+			return false;
 		}
 	}
 }

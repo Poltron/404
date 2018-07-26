@@ -15,19 +15,18 @@ public struct Subtitle
     }
 }
 
-public class AudioTrigger : MonoBehaviour
+public class AudioTrigger : MonoBehaviour, IRespawnable
 {
     [SerializeField]
-    DialogSO dialog;
+	private DialogSO dialog;
 
-    bool hasBeenPlayed;
+	private bool hasBeenPlayed;
 
-	void Start()
-    {
-		
-	}
-	
-    void OnDrawGizmos()
+	[SerializeField]
+	private bool saveCheckpoint;
+	private bool savePlayed;
+
+	private void OnDrawGizmos()
     {
         if (hasBeenPlayed)
             Gizmos.DrawIcon(transform.position, "audio_gizmo_red.png", true);
@@ -37,7 +36,7 @@ public class AudioTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Player")
+        if (other.tag != Adventure.Constantes.Tag.Player)
         {
             //Debug.LogError("AudioTrigger collided with something else than player : this should not happen. Check the Physics Collision Grid.");
             return;
@@ -49,4 +48,16 @@ public class AudioTrigger : MonoBehaviour
             hasBeenPlayed = true;
         }
     }
+
+	public void SaveCheckpoint()
+	{
+		if (saveCheckpoint)
+			savePlayed = hasBeenPlayed;
+	}
+
+	public void LoadCheckpoint()
+	{
+		if (saveCheckpoint)
+			hasBeenPlayed = savePlayed;
+	}
 }
