@@ -52,7 +52,6 @@ namespace PrincessNotFound.Parallax
 			if (sens != 0)
 			{
 				float x = Mathf.Repeat(transform.localPosition.x + (-sens * Time.deltaTime * speed * 0.5f), 19);
-				Debug.Log(x);
 				transform.localPosition = new Vector3(x, 0, 0);
 			}
 
