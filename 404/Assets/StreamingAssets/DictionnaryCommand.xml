@@ -9,12 +9,22 @@
     <command>
       <value>PRINCESS</value>
       <discover>True</discover>
-      <color>0000FFFF</color>
+      <color>FFFFFFFF</color>
     </command>
     <command>
       <value>KING</value>
       <discover>True</discover>
-      <color>0000FFFF</color>
+      <color>FFFFFFFF</color>
+    </command>
+    <command>
+      <value>DOOR</value>
+      <discover>True</discover>
+      <color>FFFFFFFF</color>
+    </command>
+    <command>
+      <value>BOULDER</value>
+      <discover>True</discover>
+      <color>FFFFFFFF</color>
     </command>
   </command>
   <command>
@@ -35,6 +45,16 @@
       <value>PLAYER</value>
       <discover>True</discover>
       <color>FF0000FF</color>
+    </command>
+    <command>
+      <value>BOULDER</value>
+      <discover>False</discover>
+      <color>FFFFFFFF</color>
+    </command>
+    <command>
+      <value>DOOR</value>
+      <discover>False</discover>
+      <color>FFFFFFFF</color>
     </command>
   </command>
   <command>

@@ -29,20 +29,19 @@ namespace Adventure
 				return ConsoleLine.ECommandResult.Failed;
 			}
 			string entityName = words[0];
-			ConsoleLine.ECommandResult result = ConsoleLine.ECommandResult.Failed;
-			List<GameObject> toDestroy = new List<GameObject>();
+			List<GameObject> toRemove = new List<GameObject>();
 
 			foreach (InteractiveBehaviour obj in cameraView.GetAllObjectInView())
 			{
 				if (string.Compare(obj.Name, entityName, true) == 0)
-					toDestroy.Add(obj.gameObject);
+					toRemove.Add(obj.gameObject);
 			}
 
-			while (toDestroy.Count > 0)
+			ConsoleLine.ECommandResult result = toRemove.Count > 0 ? ConsoleLine.ECommandResult.Successed : ConsoleLine.ECommandResult.Failed;
+			while (toRemove.Count > 0)
 			{
-				GameObject objToDestroy = toDestroy[0];
-				toDestroy.RemoveAt(0);
-				Destroy(objToDestroy);
+				toRemove[0].SetActive(false);
+				toRemove.RemoveAt(0);
 			}
 
 			return result;
