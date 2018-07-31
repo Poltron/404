@@ -16,6 +16,19 @@ namespace StateMachine
 		private void Awake()
 		{
 			Init();
+			
+		}
+
+		private void OnEnable()
+		{
+			if (Input.GetKey(MoveRight))
+			{
+				isMovingRight = true;
+			}
+			else if (Input.GetKey(MoveLeft))
+			{
+				isMovingLeft = true;
+			}
 		}
 
 		private void Update ()
@@ -33,24 +46,27 @@ namespace StateMachine
 			if (Input.GetKey(MoveRight))
 			{
 				isMovingRight = true;
+				isMovingLeft = false;
 			}
 			else if (Input.GetKey(MoveLeft))
 			{
 				isMovingLeft = true;
+				isMovingRight = false;
 			}
+
 			if (Input.GetKeyUp(MoveRight) || Input.GetKeyUp(MoveLeft))
 			{
-				if (!Input.GetKey(MoveRight) && !Input.GetKey(MoveLeft))
-				{
-					var nextState = GetComponent<StateIdle>();
-					stateMachine.SwitchState(nextState);
-				}
+				if (Input.GetKey(MoveRight) || Input.GetKey(MoveLeft))
+					return;
+
+				var nextState = GetComponent<StateIdle>();
+				mystateMachine.SwitchState(nextState);
 			}
 			else if (Input.GetKeyDown(Jump))
 			{
 				Debug.Log("HAUT");
 				var nextState = GetComponent<StateJump>();
-				stateMachine.SwitchState(nextState);
+				mystateMachine.SwitchState(nextState);
 			}
 		}
 
@@ -66,10 +82,8 @@ namespace StateMachine
 
 				isMovingLeft = false;
 
-				return;
 			}
-
-			if (isMovingRight)
+			else if (isMovingRight)
 			{
 				Vector3 moveDirection = myRigidBody.velocity;
 
@@ -78,8 +92,6 @@ namespace StateMachine
 				myRigidBody.velocity = moveDirection;
 
 				isMovingRight = false;
-
-				return;
 			}
 		}
 	}

@@ -283,7 +283,7 @@ Prefab:
     - target: {fileID: 224691221004345356, guid: 29967c8defd204c42b5a00feb50c27e8,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1759811110747144, guid: 29967c8defd204c42b5a00feb50c27e8, type: 2}
       propertyPath: m_IsActive
@@ -1355,7 +1355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateName: Jump
-  height: 10
+  height: 9.84
   feets:
   - {fileID: 2120861223}
   - {fileID: 1891858834}
@@ -1467,7 +1467,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &1891858833
 GameObject:
   m_ObjectHideFlags: 0

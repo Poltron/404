@@ -11,6 +11,7 @@ namespace StateMachine
 		private void Awake ()
 		{
 			Init();
+			mystateMachine.SwitchState(this);
 		}
 
 		private void OnEnable()
@@ -27,15 +28,13 @@ namespace StateMachine
 		{
 			if (Input.GetKey(MoveRight) || Input.GetKey(MoveLeft))
 			{
-				Debug.Log("GAUCHE OU DROITE");
 				var nextState = GetComponent<StateWalk>();
-				stateMachine.SwitchState(nextState);
+				mystateMachine.SwitchState(nextState);
 			}
 			else if (Input.GetKey(Jump))
 			{
-				Debug.Log("HAUT");
 				var nextState = GetComponent<StateJump>();
-				stateMachine.SwitchState(nextState);
+				mystateMachine.SwitchState(nextState);
 			}
 		}
 	}

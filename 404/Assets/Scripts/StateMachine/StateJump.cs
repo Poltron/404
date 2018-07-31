@@ -11,8 +11,6 @@ namespace StateMachine
 		[SerializeField]
 		private List<Transform> feets;
 
-		private float veloX;
-
 		private void Awake()
 		{
 			Init();
@@ -20,8 +18,6 @@ namespace StateMachine
 
 		private void OnEnable()
 		{
-			veloX = myRigidBody.velocity.x;
-
 			Vector3 moveDirection = myRigidBody.velocity;
 
 			moveDirection.y = height;
@@ -34,27 +30,17 @@ namespace StateMachine
 			{
 				RaycastHit2D[] ray = Physics2D.RaycastAll(trans.position, -Vector2.up, 0.1f);
 
-				if (ray.Any(r => r.transform.CompareTag("Platform")) && Input.GetKey(Key))
+				if (ray.Any(r => r.transform.CompareTag("Platform")) && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)))
 				{
 					var nextState = GetComponent<StateWalk>();
-					stateMachine.SwitchState(nextState);
+					mystateMachine.SwitchState(nextState);
 				}
-				else if (ray.Any(r => r.transform.CompareTag("Platform")) && )
+				else if (ray.Any(r => r.transform.CompareTag("Platform")) && (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow)))
 				{
 					var nextState = GetComponent<StateIdle>();
-					stateMachine.SwitchState(nextState);
+					mystateMachine.SwitchState(nextState);
 				}
 			}
-		}
-
-		private void FixedUpdate()
-		{
-			Jump();
-		}
-
-		public void Jump()
-		{
-			
 		}
 	}
 }

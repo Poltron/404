@@ -4,15 +4,17 @@ namespace StateMachine
 {
 	public abstract class State : MonoBehaviour
 	{
-		protected StateMachine stateMachine;
+		protected StateMachine mystateMachine;
 		protected Rigidbody2D myRigidBody;
+		protected InputManager myInputManager;
 		[SerializeField]
 		protected string stateName;
 
 		protected void Init()
 		{
-			stateMachine = GetComponent<StateMachine>();
+			mystateMachine = GetComponent<StateMachine>();
 			myRigidBody = GetComponent<Rigidbody2D>();
+			myInputManager = GetComponent<InputManager>();
 		}
 
 		protected virtual void CheckInput()

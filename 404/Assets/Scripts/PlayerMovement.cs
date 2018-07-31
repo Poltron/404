@@ -191,9 +191,9 @@ public class PlayerMovement : MonoBehaviour
 	public float JumpForce(float height, float time)
 	{
 		return height;
-		//gravity = CalculeGravity(height, time);
-		//myRigidBody.gravityScale += gravity;
-		//return (4.0f * height) / time;
+		gravity = CalculeGravity(height, time);
+		myRigidBody.gravityScale += gravity;
+		return (4.0f * height) / time;
 	}
 
 	private static float CalculeGravity(float height, float time)
