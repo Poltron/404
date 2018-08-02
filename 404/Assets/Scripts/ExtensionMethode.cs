@@ -9,7 +9,7 @@ namespace Adventure
 		public static string Crypt(this string s)
 		{
 			string crypted = "";
-			string value = "&#$£!?%@+*~<>=";
+			string value = "&#$£ЖфЭюѮѬΣ";
 			int nbrValue = value.Length;
 
 			for (int i = 0 ; i < s.Length ; ++i)

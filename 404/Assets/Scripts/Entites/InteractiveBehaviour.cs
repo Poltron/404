@@ -60,7 +60,8 @@ namespace Adventure
 
 		private void OnDisable()
 		{
-			visualVariable?.gameObject.SetActive(false);
+			if (visualVariable)
+				visualVariable.gameObject.SetActive(false);
 		}
 
 		private void OnBecameVisible()
