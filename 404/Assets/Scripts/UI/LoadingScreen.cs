@@ -13,7 +13,7 @@ public class LoadingScreen : MonoBehaviour
     private Text progressValue;
 
     [SerializeField]
-    private CanvasGroup sliderGroup;
+    private CanvasGroup loadingScreenGroup;
 
     [SerializeField]
     private int speed;
@@ -36,37 +36,42 @@ public class LoadingScreen : MonoBehaviour
 
     IEnumerator Load()
     {
+        // first blacken the screen
         while (panel.color.a < 1)
         {
             panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, panel.color.a + speed * Time.deltaTime);
-            sliderGroup.alpha += speed * Time.deltaTime;
+            loadingScreenGroup.alpha += speed * Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
         }
-        
-        AsyncOperation op = SceneManager.LoadSceneAsync(toLoad, LoadSceneMode.Additive);
-        while (!op.isDone)
-        {
-            progressValue.text = (op.progress * 100).ToString();
-            yield return new WaitForEndOfFrame();
-        }
 
-        Canvas[] canvases = FindObjectsOfType<Canvas>();
-        CanvasGroup toLoadCanvas = null;
-        foreach(Canvas c in canvases)
-        {
-            if (c.gameObject.scene.name == toLoad)
-            {
-                toLoadCanvas = c.GetComponent<CanvasGroup>();
-                toLoadCanvas.alpha = 0;
-            }
-        }
+        // unload active scene
         AsyncOperation op2 = SceneManager.UnloadSceneAsync(toUnload);
         while (!op2.isDone)
         {
             yield return new WaitForEndOfFrame();
         }
 
+        // load active scene
+        AsyncOperation op = SceneManager.LoadSceneAsync(toLoad, LoadSceneMode.Additive);
+        while (!op.isDone)
+        {
+            int progress = (int)(op.progress * 100);
+            progressValue.text = progress.ToString();
+            yield return new WaitForEndOfFrame();
+        }
+
+        // set loaded scene canvas to 0
+        /*Canvas[] canvases = FindObjectsOfType<Canvas>();
+        CanvasGroup toLoadCanvas = null;
+        foreach(Canvas c in canvases)
+        {
+            if (c.gameObject.scene.name == toLoad )
+            {
+                toLoadCanvas = c.GetComponent<CanvasGroup>();
+                toLoadCanvas.alpha = 0;
+            }
+        }*/
 
         progressValue.text = "100";
 
@@ -81,10 +86,10 @@ public class LoadingScreen : MonoBehaviour
         while (panel.color.a > 0)
         {
             panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, panel.color.a - speed * Time.deltaTime);
-            sliderGroup.alpha -= speed * 3 * Time.deltaTime;
+            loadingScreenGroup.alpha -= speed * 3 * Time.deltaTime;
 
-            if (toLoadCanvas)
-                toLoadCanvas.alpha += speed * Time.deltaTime;
+            /*if (toLoadCanvas)
+                toLoadCanvas.alpha += speed * Time.deltaTime;*/
 
             yield return new WaitForEndOfFrame();
         }

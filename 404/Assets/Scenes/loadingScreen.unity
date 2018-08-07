@@ -273,7 +273,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &502018277
 RectTransform:
@@ -307,7 +307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 1898189737}
   progressValue: {fileID: 1541770577}
-  sliderGroup: {fileID: 1019543533}
+  loadingScreenGroup: {fileID: 1019543533}
   speed: 2
 --- !u!1 &630640593
 GameObject:
@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 1699412669}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
