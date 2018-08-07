@@ -1582,6 +1582,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolutionDropdown: {fileID: 114384498036364680}
+  qualityDropdown: {fileID: 114627416226350950}
 --- !u!114 &114244970321592456
 MonoBehaviour:
   m_ObjectHideFlags: 1

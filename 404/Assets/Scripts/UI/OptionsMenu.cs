@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ public class OptionsMenu : MonoBehaviour
 {
     [SerializeField]
     private Dropdown resolutionDropdown;
+
+    [SerializeField]
+    private Dropdown qualityDropdown;
 
     private bool isInitialized;
     private Resolution[] resolutions;
@@ -30,7 +34,7 @@ public class OptionsMenu : MonoBehaviour
     private void Initialize()
     {
         isInitialized = true;
-        resolutions = Screen.resolutions;
+        resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
 
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -51,6 +55,9 @@ public class OptionsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolution;
         resolutionDropdown.RefreshShownValue();
+
+        qualityDropdown.value = qualityDropdown.options.Count - 1;
+        qualityDropdown.RefreshShownValue();
     }
 
     public void SetVolume(float volume)
