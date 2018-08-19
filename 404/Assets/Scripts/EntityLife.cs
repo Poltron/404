@@ -9,6 +9,8 @@ public class EntityLife : MonoBehaviour
 
     private int actualHealth;
 
+	public int ActualHealth => actualHealth;
+
     public void Start()
     {
         actualHealth = maxHealth;
