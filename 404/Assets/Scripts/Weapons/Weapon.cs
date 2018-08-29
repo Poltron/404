@@ -13,6 +13,12 @@ namespace Adventure
 
 		public virtual void Use()
 		{
+			if (data.Sound)
+				FindObjectOfType<AudioManager>().PlaySound(data.Sound);
+		}
+
+		public virtual void ActiveWeapon()
+		{
 			Collider2D[] contact = Physics2D.OverlapBoxAll(transform.position, Vector2.one * data.Range, 0.0f);
 
 			foreach (Collider2D col in contact)
@@ -21,7 +27,9 @@ namespace Adventure
 				if (entity == null || col.gameObject == gameObject)
 					continue;
 				entity.TakeDamage(data.Damage);
+				Debug.Log("Touch " + entity.name);
 			}
+			Debug.Log("End Attack");
 		}
 
 		public virtual void Throw()

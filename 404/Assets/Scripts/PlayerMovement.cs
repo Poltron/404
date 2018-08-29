@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool isMovingRight;
 	private bool isMovingLeft;
 	private bool isKeyJump;
+	private bool isAttack;
 
 	private const float DefaulGravity = 9.81f;
 	private float gravity;
@@ -17,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
 	private Transform myTransform;
 	private Animator myAnimator;
 	private Rigidbody2D myRigidBody;
-
-	
 
 	#endregion
 
@@ -31,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 	private KeyCode keyLeft;
 	[SerializeField]
 	private KeyCode keyJump;
+	[SerializeField]
+	private KeyCode keyAttack;
 	[Header("Jump")]
 	[SerializeField]
 	private float jumpHeight;
@@ -83,6 +84,10 @@ public class PlayerMovement : MonoBehaviour
 		{
 			isKeyJump = true;
 		}
+		if (Input.GetKeyDown(keyAttack))
+		{
+			isAttack = true;
+		}
 	}
 
     private void UpdateAnimator()
@@ -110,7 +115,11 @@ public class PlayerMovement : MonoBehaviour
             }
             else // et qu'il bouge ne bouge pas
             {
-                if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+				if (isAttack)
+				{
+					myAnimator.SetTrigger("isAttack");
+				}
+                else if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 {
                     myAnimator.SetTrigger("isIdle");
                 }
@@ -134,6 +143,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+	private void StopAttack()
+	{
+		isAttack = false;
+	}
 
 	public void Move()
 	{

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualName: MACE
   damage: 3
+  range: 1
+  sound: {fileID: 8300000, guid: 7f858bfc4f419c941a8f279b457b5cec, type: 3}

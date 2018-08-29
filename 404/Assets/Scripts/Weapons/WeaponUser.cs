@@ -37,6 +37,12 @@ namespace Adventure
 			}
 		}
 
+		private void ActiveWeapon()
+		{
+			if (weapon)
+				weapon.ActiveWeapon();
+		}
+
 		private void Equip(string weaponValue)
 		{
 			if (weapon && weapon.Name == weaponValue)

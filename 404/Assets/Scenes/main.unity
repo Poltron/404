@@ -609,6 +609,11 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 114350213331300000, guid: dd95c24568eb59a4e81b1facfa58132c,
+        type: 2}
+      propertyPath: maxHealth
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dd95c24568eb59a4e81b1facfa58132c, type: 2}
   m_IsPrefabParent: 0
@@ -1421,6 +1426,11 @@ Prefab:
         type: 2}
       propertyPath: defaultVariables.Array.data[1].value
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114834393267104194, guid: b3e0d2a6645c602468c4e51f5386b6a6,
+        type: 2}
+      propertyPath: keyAttack
+      value: 306
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3e0d2a6645c602468c4e51f5386b6a6, type: 2}

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,31 @@ public class AudioManager : MonoBehaviour
     Text subtitleText;
 
     Coroutine activeSubtitleRoutine;
+
+	[SerializeField]
+	private AudioSource prefabSoundEffect;
+	[SerializeField]
+	private Transform contentSoundsEffect;
+	private List<AudioSource> allSoundsEffect;
+
+	private void Awake()
+	{
+		allSoundsEffect = new List<AudioSource>();
+	}
+
+	public void PlaySound(AudioClip clip)
+	{
+		AudioSource avaibleSource = allSoundsEffect.Find(s => s.isPlaying == false);
+
+		if (avaibleSource == null)
+		{
+			avaibleSource = Instantiate(prefabSoundEffect, contentSoundsEffect);
+			allSoundsEffect.Add(avaibleSource);
+		}
+
+		avaibleSource.clip = clip;
+		avaibleSource.Play();
+	}
 
     public void PlayDialog(DialogSO dialogObject)
     {

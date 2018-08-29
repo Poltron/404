@@ -27,6 +27,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1190101735287436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4342060635585392}
+  m_Layer: 0
+  m_Name: ContentSoundsEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1191561208279244
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,6 +87,19 @@ Transform:
   m_Father: {fileID: 4728468979308192}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4342060635585392
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190101735287436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4728468979308192}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4450514712866580
 Transform:
   m_ObjectHideFlags: 1
@@ -97,6 +125,7 @@ Transform:
   m_Children:
   - {fileID: 4101287384789272}
   - {fileID: 4450514712866580}
+  - {fileID: 4342060635585392}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -275,3 +304,6 @@ MonoBehaviour:
   dialogAudioSource: {fileID: 82994016786734648}
   subtitleBox: {fileID: 0}
   subtitleText: {fileID: 0}
+  prefabSoundEffect: {fileID: 82034550065688890, guid: be735bd4db70f6447899610d11d5961d,
+    type: 2}
+  contentSoundsEffect: {fileID: 4342060635585392}
