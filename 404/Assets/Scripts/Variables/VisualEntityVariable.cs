@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +15,15 @@ namespace Adventure
 
 		private List<VisualVariable> allVariables;
 
-        [SerializeField]
+		[SerializeField]
 		private Camera mainCamera;
 		private InteractiveBehaviour owner;
 		private Transform target;
+
+		[SerializeField]
+		private bool hideName;
+		[SerializeField, Range(0.0f, 60.0f)]
+		private float timeToCrypt;
 
 		private ConsoleDictionnary dico;
 		private ConsoleLine console;
@@ -29,10 +32,25 @@ namespace Adventure
 		{
 			owner = entity;
 			this.target = target;
-			objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
+
+			if (hideName)
+			{
+				if (timeToCrypt > 0.0f)
+					InvokeRepeating("CryptName", 0.0f, timeToCrypt);
+				else
+					objName.text = "<color=#ffffffff>" + owner.Name.Crypt() + "</color>";
+			}
+			else
+				objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
 
 			console = FindObjectOfType<ConsoleLine>();
 			dico = console.GetComponent<ConsoleDictionnary>();
+
+			// temporary fix to add objects without having a ref to the main camera
+			if (mainCamera == null)
+			{
+				mainCamera = Camera.main;
+			}
 
 			console.AddOnWriteCommand(SetColor);
 			console.AddOnActiveCommande(OnActiveConsole);
@@ -50,6 +68,11 @@ namespace Adventure
 		private void Update()
 		{
 			transform.position = mainCamera.WorldToScreenPoint(target.position);
+		}
+
+		private void CryptName()
+		{
+			objName.text = "<color=#ffffffff>" + owner.Name.Crypt() + "</color>";
 		}
 
 		private void InitTransform()
@@ -82,15 +105,19 @@ namespace Adventure
 			{
 				foreach (VisualVariable visual in allVariables)
 					visual.ResetColor();
-				objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(Color.white) + ">" + owner.Name + "</color>";
+				if (!hideName)
+					objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
 				return ConsoleLine.ECommandResult.Failed;
 			}
 
 			ConsoleDictionnary.Command t = command.FindValue(owner.Name, 1);
-			if (t == null || !t.discover)
-				objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
-			else
-				objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(command.color) + ">" + owner.Name + "</color>";
+			if (!hideName)
+			{
+				if (t == null || !t.discover)
+					objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
+				else
+					objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(command.color) + ">" + owner.Name + "</color>";
+			}
 
 			foreach (VisualVariable visual in allVariables)
 			{
@@ -104,7 +131,8 @@ namespace Adventure
 		{
 			foreach (VisualVariable visual in allVariables)
 				visual.ResetColor();
-			objName.text = "<color=#" + ColorUtility.ToHtmlStringRGBA(Color.white) + ">" + owner.Name + "</color>";
+			if (!hideName)
+				objName.text = "<color=#ffffffff>" + owner.Name + "</color>";
 		}
 	}
 }

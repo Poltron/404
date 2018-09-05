@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -18,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 	private Animator myAnimator;
 	private Rigidbody2D myRigidBody;
 	private StateMachine.StateMachine myStateMachine;
+
+	
 
 	#endregion
 
@@ -40,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
 	private List<Transform> feets;
 	[SerializeField]
 	private float speed;
+	[Header("Parallax")]
+	[SerializeField]
+	private PrincessNotFound.Parallax.ParallaxManager parallax;
 
 	#endregion
 
@@ -50,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         myAnimator = gameObject.GetComponent<Animator>();
 		myStateMachine = gameObject.GetComponent<StateMachine.StateMachine>();
 		gravity = DefaulGravity;
+
 	}
 
 	private void Update()
@@ -68,10 +73,12 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetKey(keyRight))
 		{
 			isMovingRight = true;
+			parallax.SetSens(1);
 		}
 		if (Input.GetKey(keyLeft))
 		{
 			isMovingLeft = true;
+			parallax.SetSens(-1);
 		}
 		if (Input.GetKeyDown(keyJump))
 		{
@@ -140,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
 			myRigidBody.velocity = moveDirection;
 
 			isMovingLeft = false;
+			parallax.SetSens(0);
 
 			return;
 		}
@@ -153,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
 			myRigidBody.velocity = moveDirection;
 
 			isMovingRight = false;
+			parallax.SetSens(0);
 
 			return;
 		}

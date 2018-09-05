@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66e136411e7497458cc76648fc3597e, type: 3}
+  m_Name: Forest
+  m_EditorClassIdentifier: 
+  elements:
+  - elementName: Big tree
+    img: {fileID: 21300000, guid: 092ccdd5b1ee6e946bc0355a7af06d14, type: 3}
+    speed: 10
+  - elementName: Forest
+    img: {fileID: 21300000, guid: 882c4a98f4d4e0646a9c53074fa22407, type: 3}
+    speed: 6
+  - elementName: Sky and clouds
+    img: {fileID: 21300000, guid: 7f68b47f7fc0d27428162ac9105a1d66, type: 3}
+    speed: 2

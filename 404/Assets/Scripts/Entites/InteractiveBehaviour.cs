@@ -9,6 +9,9 @@ namespace Adventure
 		#region Event
 		public delegate void CameraViewDelegate(InteractiveBehaviour obj, bool visible);
 		private static event CameraViewDelegate OnCameraView;
+
+		public delegate void CreateEntity(InteractiveBehaviour obj, bool isCreated);
+		private static event CreateEntity OnCreateEntity;
 		#endregion
 
 		[SerializeField]
@@ -38,17 +41,40 @@ namespace Adventure
 			visualVariable.Init(this, GetAllVariable(), targetVisual);
 		}
 
+		private void Start()
+		{
+			InvokeOnCreateEntity(this, true);
+		}
+
 		private void OnDestroy()
 		{
 			if (visualVariable)
 				Destroy(visualVariable.gameObject);
+			InvokeOnCreateEntity(this, false);
 		}
 
-		public IReadOnlyCollection<EntityVariable> GetAllVariable()
+		private void OnEnable()
 		{
-			return defaultVariables.AsReadOnly();
+			visualVariable?.gameObject.SetActive(true);
 		}
 
+		private void OnDisable()
+		{
+			if (visualVariable)
+				visualVariable.gameObject.SetActive(false);
+		}
+
+		private void OnBecameVisible()
+		{
+			InvokeOnCameraView(this, true);
+		}
+
+		private void OnBecameInvisible()
+		{
+			InvokeOnCameraView(this, false);
+		}
+
+		#region Get&Set
 		public EntityVariable GetVariable(string name)
 		{
 			return GetVariable(name, true);
@@ -56,7 +82,8 @@ namespace Adventure
 
 		public EntityVariable GetVariable(string name, bool force)
 		{
-			if (allVariables.ContainsKey(name) == false)
+			name = name.ToUpper();
+			if (allVariables.ContainsKey(name, true) == false)
 				return null;
 			if (allVariables[name].Viewable == EViewable.Hide)
 				return null;
@@ -76,15 +103,11 @@ namespace Adventure
 				return false;
 			return allVariables[name].Set(value);
 		}
+		#endregion
 
-		private void OnBecameVisible()
+		public IReadOnlyCollection<EntityVariable> GetAllVariable()
 		{
-			InvokeOnCameraView(this, true);
-		}
-
-		private void OnBecameInvisible()
-		{
-			InvokeOnCameraView(this, false);
+			return defaultVariables.AsReadOnly();
 		}
 
 		#region Event
@@ -104,6 +127,23 @@ namespace Adventure
 			OnCameraView?.Invoke(obj, visible);
 		}
 		#endregion
+		#region OnCreateEntity
+		public static void AddOnCreateEntity(CreateEntity func)
+		{
+			OnCreateEntity += func;
+		}
+
+		public static void RemoveOnCreateEntity(CreateEntity func)
+		{
+			OnCreateEntity -= func;
+		}
+
+		private static void InvokeOnCreateEntity(InteractiveBehaviour obj, bool isCreated)
+		{
+			OnCreateEntity?.Invoke(obj, isCreated);
+		}
+		#endregion
+
 		#endregion
 	}
 }
